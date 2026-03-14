@@ -1,0 +1,14 @@
+services:
+  logistic-db:
+    image: postgres:16.3-bullseye
+    container_name: logistic-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: qwer
+      POSTGRES_USER: admin
+      POSTGRES_DB: pgdb
+    volumes:
+      - logistic-vol:/var/lib/postgresql/data
+volumes:
+  logistic-vol:

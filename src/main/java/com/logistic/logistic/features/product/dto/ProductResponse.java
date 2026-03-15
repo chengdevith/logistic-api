@@ -1,6 +1,6 @@
 package com.logistic.logistic.features.product.dto;
 
-import com.logistic.logistic.features.supplier.SupplierResponse;
+import com.logistic.logistic.features.supplier.dto.SupplierResponse;
 
 public record ProductResponse(
         Integer id,

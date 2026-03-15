@@ -3,10 +3,8 @@ package com.logistic.logistic.mapper;
 import com.logistic.logistic.domain.Product;
 import com.logistic.logistic.features.product.dto.ProductRequest;
 import com.logistic.logistic.features.product.dto.ProductResponse;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import com.logistic.logistic.features.product.dto.UpdateProductRequest;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -17,5 +15,5 @@ public interface ProductMapper {
     ProductResponse toProduct(Product product);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void fromProductUpdatePartially(ProductRequest productRequest, @MappingTarget Product product);
+    void fromProductUpdatePartially(UpdateProductRequest updateProductRequest, @MappingTarget Product product);
 }

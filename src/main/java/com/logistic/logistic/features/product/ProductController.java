@@ -2,6 +2,7 @@ package com.logistic.logistic.features.product;
 
 import com.logistic.logistic.features.product.dto.ProductRequest;
 import com.logistic.logistic.features.product.dto.ProductResponse;
+import com.logistic.logistic.features.product.dto.UpdateProductRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    ProductResponse updateProduct(@Valid @PathVariable Integer id, ProductRequest productRequest){
+    ProductResponse updateProduct(@Valid @PathVariable Integer id,@Valid @RequestBody UpdateProductRequest productRequest){
         return productService.updateProduct(productRequest, id);
     }
 

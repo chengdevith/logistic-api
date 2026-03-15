@@ -1,8 +1,11 @@
 package com.logistic.logistic.features.product;
 
 import com.logistic.logistic.domain.Product;
+import com.logistic.logistic.domain.Supplier;
 import com.logistic.logistic.features.product.dto.ProductRequest;
 import com.logistic.logistic.features.product.dto.ProductResponse;
+import com.logistic.logistic.features.product.dto.UpdateProductRequest;
+import com.logistic.logistic.features.supplier.SupplierRepository;
 import com.logistic.logistic.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +21,7 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final MapperBuilder mapperBuilder;
+    private final SupplierRepository supplierRepository;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -35,16 +38,19 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponse createProduct(ProductRequest productRequest) {
+        Supplier supplier = supplierRepository.findById(productRequest.supplierId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier " + productRequest.supplierId() + " not found"));
         Product product = productMapper.fromProduct(productRequest);
+        product.setSupplier(supplier);
         productRepository.save(product);
         return productMapper.toProduct(product);
     }
 
     @Override
-    public ProductResponse updateProduct(ProductRequest productRequest, Integer id) {
+    public ProductResponse updateProduct(UpdateProductRequest updateProductRequest, Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product " + id + " not found"));
-        productMapper.fromProductUpdatePartially(productRequest, product);
+        productMapper.fromProductUpdatePartially(updateProductRequest, product);
         productRepository.save(product);
         return productMapper.toProduct(product);
     }
